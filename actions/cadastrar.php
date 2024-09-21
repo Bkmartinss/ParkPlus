@@ -1,17 +1,18 @@
 <?php
 
 require_once '../config/connect.php';
-echo "Método atual: " . $_SERVER["REQUEST_METHOD"]; // Verifica o método da requisição
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "entrei";
-    // Valida se os campos estão definidos
     if (isset($_POST['plate'], $_POST['entry-time'], $_POST['vehicle-type'])) {
-        $placa = $_POST['plate'];
+        $placa = trim($_POST['plate']);
         $entrada = $_POST['entry-time'];
         $tipo = $_POST['vehicle-type'];
 
-        var_dump($_POST); // Para depuração
+        // Validação da placa (exemplo: formato esperado ABC1D23)
+        if (!preg_match("/^[A-Z]{3}[0-9][A-Z][0-9]{2}$/", $placa)) {
+            echo "Formato da placa inválido. Utilize o formato ABC1D23.";
+            exit;
+        }
 
         $sql = "INSERT INTO VEICULOS (PLACA, ENTRADA, VEI_TIPO) VALUES (:placa, :entrada, :tipo)";
         $stmt = $pdo->prepare($sql);
@@ -22,14 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         try {
             $stmt->execute();
-            echo "Veículo cadastrado com sucesso!";
+            echo "<div class='alert alert-success'>Veículo cadastrado com sucesso!</div>";
         } catch (PDOException $e) {
-            echo "Erro ao cadastrar veículo: " . $e->getMessage(); // Exibir erro
+            echo "<div class='alert alert-danger'>Erro ao cadastrar veículo: " . htmlspecialchars($e->getMessage()) . "</div>";
         }
     } else {
-        echo "Por favor, preencha todos os campos.";
+        echo "<div class='alert alert-warning'>Por favor, preencha todos os campos.</div>";
     }
 } else {
-    echo "Método de requisição inválido.";
+    echo "<div class='alert alert-danger'>Método de requisição inválido.</div>";
 }
 ?>
