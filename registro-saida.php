@@ -36,7 +36,7 @@
       <button type="submit" class="btn btn-primary">Registrar Saída</button>
     </form>   
     <div class="mt-3">
-      <a href="index.html" class="btn btn-secondary">Voltar para Cadastro de Veículos</a>
+      <a href="index.php" class="btn btn-secondary">Voltar para Cadastro de Veículos</a>
     </div>
   </div>
 

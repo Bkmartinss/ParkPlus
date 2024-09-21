@@ -16,7 +16,7 @@
       <a href="administração.html" class="btn btn-secondary mx-2">Administração</a>
     </div>
 
-    <form id="vehicle-form" class="mt-4" method="POST" action="caminho-ficticio.php">
+    <form id="vehicle-form" class="mt-4" method="POST" action="actions/cadastrar.php">
       <div class="mb-3">
         <label for="plate" class="form-label">Placa do Veículo</label>
         <input type="text" class="form-control" id="plate" name="plate" placeholder="Digite a placa" required>

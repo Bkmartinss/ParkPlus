@@ -63,8 +63,8 @@
     </div>
 
     <div class="mt-5">
-      <a href="index.html" class="btn btn-secondary">Cadastro de Veículos</a>
-      <a href="registro-saida.html" class="btn btn-secondary">Registro de Saída</a>
+      <a href="index.php" class="btn btn-secondary">Cadastro de Veículos</a>
+      <a href="registro-saida.php" class="btn btn-secondary">Registro de Saída</a>
     </div>
   </div>
 
