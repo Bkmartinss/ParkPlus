@@ -11,30 +11,25 @@
   <div class="container mt-5">
     <h2 class="text-center">ParkPlus - Registro de Saída</h2>
     
-    <form id="exit-form">
+    <form id="exit-form" method="POST" action="registrar-saida.php">
       <div class="mb-3">
         <label for="plate-exit" class="form-label">Placa do Veículo</label>
-        <input type="text" class="form-control" id="plate-exit" placeholder="Digite a placa" required>
-      </div>
-      <div class="mb-3">
-        <label for="exit-time" class="form-label">Hora de Saída</label>
-        <input type="time" class="form-control" id="exit-time" required>
-      </div>
-      <div class="mb-3">
-        <label for="vehicle-type-exit" class="form-label">Tipo de Veículo</label>
-        <select class="form-select" id="vehicle-type-exit" required>
-          <option value="" selected disabled>Selecione o tipo</option>
-          <option value="Carro de Passeio">Carro de Passeio</option>
-          <option value="Caminhonete">Caminhonete</option>
-          <option value="Moto">Moto</option>
+        <select class="form-select" id="plate-exit" name="plate_exit" required>
+          <option value="" selected disabled>Carregando placas...</option>
+          <?php foreach ($veiculosList as $veiculo) : ?>
+            <option value="<?= htmlspecialchars($veiculo['PLACA']); ?>" data-tipo="<?= htmlspecialchars($veiculo['VEI_TIPO']); ?>">
+              <?= htmlspecialchars($veiculo['PLACA']); ?>
+            </option>
+          <?php endforeach; ?>
         </select>
       </div>
       <div class="mb-3">
-        <label for="tariff" class="form-label">Tarifa Calculada</label>
-        <input type="text" class="form-control" id="tariff" readonly>
+        <label for="exit-time" class="form-label">Hora de Saída</label>
+        <input type="time" class="form-control" id="exit-time" name="exit_time" required>
       </div>
       <button type="submit" class="btn btn-primary">Registrar Saída</button>
-    </form>   
+    </form>
+    
     <div class="mt-3">
       <a href="index.php" class="btn btn-secondary">Voltar para Cadastro de Veículos</a>
     </div>
