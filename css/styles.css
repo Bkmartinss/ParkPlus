@@ -1,9 +1,108 @@
 /* Estilo global */
+*{ 
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  text-decoration: none;
+  list-style: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
 body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
     padding-top: 20px;
 }
+
+/* ------------ Topo do site ------------ */
+#topo{
+  display: flex; /*alinhar os itens horizontalmente*/
+  align-items: center; /*alinha verticalmente ao centro*/
+  justify-content:first baseline; /*espaço entre os itens*/
+  padding: 10px 20px; /*espaçamento interno do cabeçalho*/
+}
+.logo{
+  height: 70px; /*altura da log*/
+}
+.titulo{
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 50px; /*tamanho da fonte*/
+  font-family: "Pacifico", cursive; /*fonte*/
+  color: #851212;
+}
+/* ------------ Fim topo do site ------------ */
+
+/* ------------ Menu do site ------------ */
+#menu{
+  /* display: flex; alinhar os itens horizontalmente */
+  /* justify-content: space-between; */
+  text-align: center; /* Centralizando o menu */
+  height: 50px;
+  background-color: #851212;
+}
+#menu a{
+  display: inline-block; /* Exibe os itens em linha, lado a lado */
+  margin: 0 35px; /* Margem entre os itens do menu */
+  padding: 13px 10px; /* Espaçamento ao redor dos links */
+  color: white;
+  text-decoration: none;
+}
+#menu a:hover{
+  background-color: #ddd; /* Cor de fundo ao passar o mouse */
+  border-radius: 5px; /* Bordas arredondadas ao passar o mouse */
+  color: black;
+}
+/* ------------ Fim menu do site ------------ */
+
+/* ------------ Conteudo do site - index ------------ */
+#conteudo{
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  height: 500px;
+}
+.vagas{
+  width: 60%;
+  height: 100%; /* Garante que a imagem ocupe toda a altura */
+}
+.vagas img{
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Garante que a imagem preencha o espaço */
+}
+.texto{
+  width: 40%;
+  padding: 30px;
+}
+.texto h1{
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+.texto p{
+  text-align: justify;
+  font-size: 1.2em;
+  margin-bottom: 50px;
+}
+.texto a{
+  float: right;
+  padding: 15px 15px;
+  background-color: #851212;
+  color: white;
+  border-radius: 5px;
+}
+.texto a:hover{
+  background-color: #ddd; /* Cor de fundo ao passar o mouse */
+  border-radius: 5px; /* Bordas arredondadas ao passar o mouse */
+  color:black;
+}
+/* ------------ Fim conteudo do site - index ------------ */
 
 /* Estilização do container principal */
 .container {
@@ -78,6 +177,31 @@ h4 {
     color: #343a40;
     text-align: center;
 }
+
+/* ------------ Rodape do site ------------ */
+#rodape{
+  background-color: #851212;
+  width: 100%;
+  height: 60px;
+}
+.pe{
+  display: inline-block; /* Exibe os itens em linha, lado a lado */
+}
+.pe a{
+  float: left;
+  color: white;
+  margin: 20px 20px;
+  text-decoration: none;
+}
+#rodape p{
+  color: white;
+  float: right;
+  margin: 20px 20px;
+}
+#rodape li a:hover{
+  color:black;
+}
+/* ------------ Fim rodape do site ------------ */
 
 /* Responsividade */
 @media (max-width: 768px) {
