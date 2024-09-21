@@ -1,6 +1,6 @@
 <?php
 
-require_once '../config/connect.php'; 
+require_once '../config/connect.php'; // nao sei qual o script certo que vao usar pra conectar mas deixei como exemplo
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
