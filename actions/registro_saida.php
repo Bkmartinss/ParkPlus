@@ -1,71 +1,71 @@
 <?php
-session_start();
 
-// Conexão com o banco de dados
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$dbname = 'parkplus_db';
+require_once '../config/connect.php'; 
 
-// Cria a conexão
-$conn = new mysqli($host, $user, $password, $dbname);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    if (isset($_POST['plate_exit'], $_POST['exit_time'])) {
+        $placa = $_POST['plate_exit'];
+        $horaSaida = $_POST['exit_time'];
 
-// Verifica a conexão
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
+        
+        $sqlVeiculo = "SELECT * FROM VEICULOS WHERE PLACA = :placa AND SAIDA IS NULL";
+        $stmt = $pdo->prepare($sqlVeiculo);
+        $stmt->bindValue(':placa', $placa);
+        $stmt->execute();
+        $veiculo = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Verifica se o formulário foi enviado
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $placa = $_POST['plate_exit'] ?? null;
-    $horaSaida = $_POST['exit_time'] ?? null;
+        if ($veiculo) {
+            $horaEntrada = $veiculo['ENTRADA'];
+            $tipoVeiculo = $veiculo['VEI_TIPO'];
 
-    // Busca o veículo pela placa que ainda não tem hora de saída registrada
-    $queryVeiculo = "SELECT * FROM VEICULOS WHERE PLACA = ? AND SAIDA IS NULL";
-    $stmtVeiculo = $conn->prepare($queryVeiculo);
-    $stmtVeiculo->bind_param("s", $placa);
-    $stmtVeiculo->execute();
-    $resultVeiculo = $stmtVeiculo->get_result();
+         
+            $tempoEntrada = new DateTime($horaEntrada);
+            $tempoSaida = new DateTime($horaSaida);
+            $intervalo = $tempoSaida->diff($tempoEntrada);
+            $horasPermanencia = $intervalo->h + ($intervalo->i > 0 ? 1 : 0); 
 
-    if ($resultVeiculo->num_rows > 0) {
-        $veiculo = $resultVeiculo->fetch_assoc();
-        $horaEntrada = $veiculo['ENTRADA'];
-        $tipoVeiculo = $veiculo['VEI_TIPO'];
+            
+            $sqlTarifa = "SELECT TAR_INICIAL, TAR_HORA FROM TARIFA WHERE TAR_TIPO = :tipo";
+            $stmtTarifa = $pdo->prepare($sqlTarifa);
+            $stmtTarifa->bindValue(':tipo', $tipoVeiculo);
+            $stmtTarifa->execute();
+            $tarifa = $stmtTarifa->fetch(PDO::FETCH_ASSOC);
 
-        // Calcula o tempo de permanência
-        $tempoEntrada = new DateTime($horaEntrada);
-        $tempoSaida = new DateTime($horaSaida);
-        $intervalo = $tempoSaida->diff($tempoEntrada);
-        $horasPermanencia = $intervalo->h + ($intervalo->i > 0 ? 1 : 0); // Considera frações de horas
+            if ($tarifa) {
+                $tarifaInicial = $tarifa['TAR_INICIAL'];
+                $tarifaHora = $tarifa['TAR_HORA'];
 
-        // Busca a tarifa correspondente ao tipo de veículo
-        $queryTarifa = "SELECT TAR_INICIAL, TAR_HORA FROM TARIFA WHERE TAR_TIPO = ?";
-        $stmtTarifa = $conn->prepare($queryTarifa);
-        $stmtTarifa->bind_param("i", $tipoVeiculo);
-        $stmtTarifa->execute();
-        $resultTarifa = $stmtTarifa->get_result();
+               
+                $valorTotal = $tarifaInicial + ($horasPermanencia - 1) * $tarifaHora;
 
-        if ($resultTarifa->num_rows > 0) {
-            $tarifa = $resultTarifa->fetch_assoc();
-            $tarifaInicial = $tarifa['TAR_INICIAL'];
-            $tarifaHora = $tarifa['TAR_HORA'];
+                
+                $sqlUpdate = "UPDATE VEICULOS 
+                              SET SAIDA = :saida, TEMPO = :tempo, VALOR = :valor 
+                              WHERE ID = :id";
+                $stmtUpdate = $pdo->prepare($sqlUpdate);
+                $stmtUpdate->bindValue(':saida', $horaSaida);
+                $stmtUpdate->bindValue(':tempo', $horasPermanencia);
+                $stmtUpdate->bindValue(':valor', $valorTotal);
+                $stmtUpdate->bindValue(':id', $veiculo['ID']);
 
-            // Calcula o valor total
-            $valorTotal = $tarifaInicial + ($horasPermanencia - 1) * $tarifaHora;
-
-            // Atualiza o veículo com a hora de saída, tempo e valor
-            $queryUpdateVeiculo = "
-                UPDATE VEICULOS 
-                SET SAIDA = ?, TEMPO = ?, VALOR = ?
-                WHERE ID = ?";
-            $stmtUpdateVeiculo = $conn->prepare($queryUpdateVeiculo);
-            $stmtUpdateVeiculo->bind_param("sidi", $horaSaida, $horasPermanencia, $valorTotal, $veiculo['ID']);
-            $stmtUpdateVeiculo->execute();
-
-            // Exibe o valor total para o usuário
-            echo "Valor total a ser pago: R$" . number_format($valorTotal, 2);
+                try {
+                    $stmtUpdate->execute();
+                    echo "Saída registrada com sucesso! Valor total: R$ " . number_format($valorTotal, 2);
+                } catch (PDOException $e) {
+                    echo "Erro ao registrar a saída: " . $e->getMessage();
+                }
+            } else {
+                echo "Tarifa não encontrada para o tipo de veículo.";
+            }
+        } else {
+            echo "Veículo não encontrado ou já registrado como saído.";
         }
     } else {
-        echo "Veículo não encontrado ou já registrado como saído.";
+        echo "Por favor, preencha todos os campos.";
     }
+} else {
+    echo "Método de requisição inválido.";
 }
+
+?>
