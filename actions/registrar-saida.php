@@ -1,5 +1,5 @@
 <?php
-require_once "../config/connect.php"; // Inclui a conexão com o banco de dados
+require_once "../config/connect.php"; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $plate = $_POST['plate_exit'];
