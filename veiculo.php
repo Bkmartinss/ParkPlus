@@ -55,6 +55,8 @@
       <button type="submit" class="btn btn-primary">Cadastrar Veículo</button>
     </form>
   </div>
+  <div id="message" class="alert" style="display:none;"></div>
+
 
   <div id="rodape">
     <?php include "partes/rodape.php"?>
