@@ -27,13 +27,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        const entrada = new Date(data.horaEntrada);
-                        const [hours, minutes] = exitTime.split(':').map(Number);
-                        const tempoSaida = new Date(entrada);
-                        tempoSaida.setHours(tempoSaida.getHours() + hours, tempoSaida.getMinutes() + minutes);
+                        const entrada = new Date(`1970-01-01T${data.horaEntrada}`);
+                        const saida = new Date(`1970-01-01T${exitTime}`);
 
-                        const horasPermanencia = Math.ceil((tempoSaida - entrada) / (1000 * 60 * 60));
+                       
+                        const tempoPermanencia = Math.ceil((saida - entrada) / (1000 * 60 * 60)); // em horas
 
+                        
                         let tarifaInicial = 0;
                         let tarifaAdicional = 0;
 
@@ -52,8 +52,15 @@ document.addEventListener("DOMContentLoaded", function() {
                                 break;
                         }
 
-                        let valorTotal = tarifaInicial + (horasPermanencia > 1 ? (horasPermanencia - 1) * tarifaAdicional : 0);
+                        let valorTotal = tarifaInicial;
+                        if (tempoPermanencia > 1) {
+                            valorTotal += (tempoPermanencia - 1) * tarifaAdicional;
+                        }
+
                         tariffInput.value = `R$ ${valorTotal.toFixed(2)}`;
+
+                        
+                        generateReceipt(data, tempoPermanencia, valorTotal);
                     } else {
                         tariffInput.value = '';
                         console.error(data.message);
@@ -65,9 +72,20 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    function generateReceipt(data, tempoPermanencia, valorTotal) {
+        const receipt = `
+            Recibo de Saída
+            Placa: ${data.placa}
+            Tipo: ${data.tipoVeiculo}
+            Tempo de Permanência: ${tempoPermanencia} hora(s)
+            Valor Total: R$ ${valorTotal.toFixed(2)}
+        `;
+        console.log(receipt); 
+    }
+
     plateSelect.addEventListener("change", function() {
-        exitTimeInput.value = ''; // Limpa o campo de hora de saída
-        tariffInput.value = ''; // Limpa a tarifa
+        exitTimeInput.value = ''; 
+        tariffInput.value = ''; 
     });
 
     exitTimeInput.addEventListener("input", calculateTariff);
