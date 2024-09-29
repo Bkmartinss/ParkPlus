@@ -1,66 +1,65 @@
 /* Estilo global */
-*{ 
+* { 
   padding: 0;
   margin: 0;
   font-size: 16px;
-  text-decoration: none;
   list-style: none;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
+  text-decoration: none;
 }
 
 body {
-    background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
-    padding-top: 20px;
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  padding-top: 20px;
 }
 
 /* ------------ Topo do site ------------ */
-#topo{
-  display: flex; /*alinhar os itens horizontalmente*/
-  align-items: center; /*alinha verticalmente ao centro*/
-  justify-content:first baseline; /*espaço entre os itens*/
-  padding: 10px 20px; /*espaçamento interno do cabeçalho*/
+#topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
 }
-.logo{
-  height: 70px; /*altura da log*/
+
+.logo {
+  height: 70px;
 }
-.titulo{
+
+.titulo {
   font-weight: bold;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   text-align: center;
-  font-size: 50px; /*tamanho da fonte*/
-  font-family: "Pacifico", cursive; /*fonte*/
+  font-size: 50px;
+  font-family: "Pacifico", cursive;
   color: #851212;
 }
 /* ------------ Fim topo do site ------------ */
 
 /* ------------ Menu do site ------------ */
-#menu{
-  /* display: flex; alinhar os itens horizontalmente */
-  /* justify-content: space-between; */
-  text-align: center; /* Centralizando o menu */
+#menu {
+  text-align: center;
   height: 50px;
   background-color: #851212;
 }
-#menu a{
-  display: inline-block; /* Exibe os itens em linha, lado a lado */
-  margin: 0 35px; /* Margem entre os itens do menu */
-  padding: 13px 10px; /* Espaçamento ao redor dos links */
-  color: white;
+
+#menu a {
+  display: inline-block;
+  margin: 0 35px;
+  padding: 13px 10px;
+  color: #ffffff;
   text-decoration: none;
+  transition: background-color 0.3s;
 }
-#menu a:hover{
-  background-color: #ddd; /* Cor de fundo ao passar o mouse */
-  border-radius: 5px; /* Bordas arredondadas ao passar o mouse */
-  color: black;
+
+#menu a:hover {
+  background-color: #ddd;
+  border-radius: 5px;
 }
 /* ------------ Fim menu do site ------------ */
 
 /* ------------ Conteudo do site - index ------------ */
-#conteudo{
+#conteudo {
   display: flex;
   width: 100%;
   max-width: 100%;
@@ -68,224 +67,216 @@ body {
   justify-content: space-between;
   height: 500px;
 }
-.vagas{
+
+.vagas {
   width: 60%;
-  height: 100%; /* Garante que a imagem ocupe toda a altura */
+  height: 100%;
 }
-.vagas img{
+
+.vagas img {
   width: 100%;
   height: auto;
-  object-fit: cover; /* Garante que a imagem preencha o espaço */
+  object-fit: cover;
 }
-.texto{
+
+.texto {
   width: 40%;
   padding: 30px;
 }
-.texto h1{
+
+.texto h1 {
   font-size: 2em;
   margin-bottom: 10px;
+  color: #343a40;
 }
-.texto p{
+
+.texto p {
   text-align: justify;
   font-size: 1.2em;
   margin-bottom: 50px;
+  color: #495057;
 }
-.texto a{
+
+.texto a {
   float: right;
   padding: 15px 15px;
   background-color: #851212;
   color: white;
   border-radius: 5px;
+  transition: background-color 0.3s;
 }
-.texto a:hover{
-  background-color: #ddd; /* Cor de fundo ao passar o mouse */
-  border-radius: 5px; /* Bordas arredondadas ao passar o mouse */
-  color:black;
+
+.texto a:hover {
+  background-color: #ddd;
+  color: black;
 }
 /* ------------ Fim conteudo do site - index ------------ */
 
 /* Estilização do container principal */
 .container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #ffffff; 
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Título centralizado */
 h2 {
-    margin-bottom: 30px;
-    font-weight: bold;
-    color: #343a40;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #343a40;
 }
 
 /* Labels dos campos */
 .form-label {
-    font-weight: bold;
-    color: #495057;
+  font-weight: bold;
+  color: #495057;
 }
 
 /* Botão de cadastrar */
 .btn-primary {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #851212; /* Cor do botão */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-primary:hover {
+  background-color: #6c757d;
 }
 
 /* Lista de veículos cadastrados */
 #vehicle-list {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #e9ecef;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #e9ecef;
 }
 
 #vehicle-list .list-group-item {
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #ffffff;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Link para a próxima tela */
 a.btn-secondary {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 20px;
-    text-align: center;
-    background-color: #6c757d;
-    color: #ffffff;
-    text-decoration: none;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
+  background-color: #6c757d;
+  color: #ffffff;
+  border-radius: 5px;
 }
 
 a.btn-secondary:hover {
-    background-color: #5a6268;
-    text-decoration: none;
+  background-color: #5a6268;
 }
 
 /* Título da seção de veículos cadastrados */
 h4 {
-    margin-top: 40px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    color: #343a40;
-    text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #343a40;
+  text-align: center;
 }
 
 /* ------------ Rodape do site ------------ */
-#rodape{
+#rodape {
   background-color: #851212;
   width: 100%;
   height: 60px;
 }
-.pe{
-  display: inline-block; /* Exibe os itens em linha, lado a lado */
+
+.pe {
+  display: inline-block;
 }
-.pe a{
+
+.pe a {
   float: left;
   color: white;
   margin: 20px 20px;
-  text-decoration: none;
 }
-#rodape p{
+
+#rodape p {
   color: white;
   float: right;
   margin: 20px 20px;
 }
-#rodape li a:hover{
-  color:black;
+
+#rodape li a:hover {
+  color: black;
 }
 /* ------------ Fim rodape do site ------------ */
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .container {
-        padding: 15px;
-    }
+  .container {
+    padding: 15px;
+  }
 
-    .btn-primary, a.btn-secondary {
-        font-size: 14px;
-    }
+  .btn-primary, a.btn-secondary {
+    font-size: 14px;
+  }
 }
 
-body {
-    background-color: #f8f9fa;
-  }
-  
-  h2 {
-    color: #343a40;
-    font-weight: bold;
-    margin-bottom: 30px;
-  }
-  
-  form {
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .btn-primary {
-    background-color: #851212;
-    border-color: #851212;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-  }
-  
-  ul.list-group {
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  
-  .list-group-item {
-    background-color: #ffffff;
-  }
-  
-  .mt-5 h4 {
-    font-size: 1.5rem;
-    color: #495057;
-  }
-  
-  /* Estilos específicos para a página de administração */
+/* Estilos específicos para a página de administração */
 .table {
-    margin-top: 20px;
-  }
-  
-  .card {
-    margin-top: 20px;
-  }
-  
-  .card-body {
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-title {
-    font-weight: bold;
-    color: #343a40;
-  }
-  
-  .card-text {
-    font-size: 1.2rem;
-    color: #495057;
-  }
-  
-  #vehicle-management tr td {
-    vertical-align: middle;
-  }
-  
-  #vehicle-management tr td button {
-    margin-right: 10px;
-  }
+  margin-top: 50px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #851212;
+  color: white;
+}
+
+.card {
+  margin-top: 20px;
+}
+
+.card-body {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-weight: bold;
+  color: #343a40;
+  font-size: 1.5rem;
+}
+
+.card-text {
+  font-size: 1.2rem;
+  color: #495057;
+}
+
+#vehicle-management tr td {
+  vertical-align: middle;
+  padding: 15px;
+}
+
+#vehicle-management tr td button {
+  margin-right: 8px;
+}
