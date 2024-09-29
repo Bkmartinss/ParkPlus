@@ -1,12 +1,10 @@
 <?php
-require_once 'config/connect.php'; // Inclui a conexão com o banco de dados
+require_once 'config/connect.php';
 
 try {
-    // Consulta para obter todos os veículos e suas informações
     $sql = "SELECT V.PLACA, V.ENTRADA, V.SAIDA, V.TEMPO, V.VALOR, T.TIPO 
             FROM VEICULOS V
-            JOIN TIPO_VEICULO T ON V.VEI_TIPO = T.ID
-            WHERE V.SAIDA IS NOT NULL"; // Somente veículos com saída registrada
+            JOIN TIPO_VEICULO T ON V.VEI_TIPO = T.ID";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -19,9 +17,8 @@ try {
     $total_motos = 0;
 
     foreach ($veiculos as $veiculo) {
-        $total_revenue += $veiculo['VALOR'];
+        $total_revenue += $veiculo['VALOR'] ?? 0;
 
-        // Contagem por tipo de veículo
         switch ($veiculo['TIPO']) {
             case 'Carro':
                 $total_carros++;
@@ -53,14 +50,14 @@ try {
 </head>
 <body>
   <div id="topo">
-    <?php include "partes/topo.php"?>
+    <?php include "partes/topo.php" ?>
   </div>
   <div id="menu">
-    <?php include "partes/menu.php"?>
+    <?php include "partes/menu.php" ?>
   </div>
 
   <div class="container mt-5">
-    <h2 class="text-center">ParkPlus - Administração</h2>
+    <h2 class="text-center mb-4">ParkPlus - Administração</h2>
     
     <div class="mt-5">
       <h4>Gerenciamento de Veículos</h4>
@@ -70,6 +67,9 @@ try {
             <th>Placa do Veículo</th>
             <th>Tipo de Veículo</th>
             <th>Hora de Entrada</th>
+            <th>Hora de Saída</th>
+            <th>Tempo</th>
+            <th>Valor</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -80,14 +80,18 @@ try {
                 <td><?= htmlspecialchars($veiculo['PLACA']); ?></td>
                 <td><?= htmlspecialchars($veiculo['TIPO']); ?></td>
                 <td><?= htmlspecialchars($veiculo['ENTRADA']); ?></td>
+                <td><?= htmlspecialchars($veiculo['SAIDA'] ?? 'Não Registrada'); ?></td>
+                <td><?= htmlspecialchars($veiculo['TEMPO'] ?? 'Indefinido'); ?></td>
+                <td>R$ <?= number_format($veiculo['VALOR'] ?? 0, 2, ',', '.'); ?></td>
                 <td>
-                  <a href="detalhes-veiculo.php?placa=<?= urlencode($veiculo['PLACA']); ?>" class="btn btn-sm btn-info">Ver Detalhes</a>
+                  <a href="actions/editar.php?placa=<?= urlencode($veiculo['PLACA']); ?>" class="btn btn-sm btn-warning">Editar</a>
+                  <a href="actions/remover.php?placa=<?= urlencode($veiculo['PLACA']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja remover este veículo?');">Remover</a>
                 </td>
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
             <tr>
-              <td colspan="4" class="text-center">Nenhum veículo registrado.</td>
+              <td colspan="7" class="text-center">Nenhum veículo registrado.</td>
             </tr>
           <?php endif; ?>
         </tbody>
@@ -128,13 +132,14 @@ try {
       </div>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-5 text-center">
       <a href="veiculo.php" class="btn btn-secondary">Cadastro de Veículos</a>
       <a href="registro-saida.php" class="btn btn-secondary">Registro de Saída</a>
     </div>
   </div>
+
   <div id="rodape">
-    <?php include "partes/rodape.php"?>
+    <?php include "partes/rodape.php" ?>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

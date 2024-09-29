@@ -14,10 +14,10 @@
 </head>
 <body>
   <div id="topo">
-    <?php include "partes/topo.php"?>
+    <?php include "partes/topo.php" ?>
   </div>
   <div id="menu">
-      <?php include "partes/menu.php"?>
+    <?php include "partes/menu.php" ?>
   </div>
 
   <div class="container mt-5">
@@ -28,13 +28,7 @@
       <a href="administracao.php" class="btn btn-secondary mx-2">Administração</a>
     </div>
 
-    <?php if (isset($_GET['msg'])): ?>
-      <div class="alert alert-<?php echo htmlspecialchars($_GET['type']); ?>">
-        <?php echo htmlspecialchars($_GET['msg']); ?>
-      </div>
-    <?php endif; ?>
-
-    <form id="vehicle-form" class="mt-4" method="POST" action="actions/cadastrar.php">
+    <form id="vehicle-form" class="mt-4">
       <div class="mb-3">
         <label for="plate" class="form-label">Placa do Veículo</label>
         <input type="text" class="form-control" id="plate" name="plate" placeholder="Digite a placa" required>
@@ -54,14 +48,44 @@
       </div>
       <button type="submit" class="btn btn-primary">Cadastrar Veículo</button>
     </form>
-  </div>
-  <div id="message" class="alert" style="display:none;"></div>
 
+    <div id="message" class="alert mt-3" style="display: none;"></div>
+  </div>
 
   <div id="rodape">
-    <?php include "partes/rodape.php"?>
+    <?php include "partes/rodape.php" ?>
   </div>
-  
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#vehicle-form').on('submit', function (event) {
+        event.preventDefault();
+        const formData = $(this).serialize();
+
+        $.ajax({
+          type: 'POST',
+          url: 'actions/cadastrar.php',
+          data: formData,
+          success: function (response) {
+            $('#message').removeClass('alert-danger alert-warning alert-success').html(response).fadeIn();
+
+            if (response.includes('sucesso')) {
+              $('#message').addClass('alert-success');
+              $('#vehicle-form')[0].reset();
+            } else if (response.includes('Erro ao cadastrar')) {
+              $('#message').addClass('alert-danger');
+            } else {
+              $('#message').addClass('alert-warning');
+            }
+          },
+          error: function () {
+            $('#message').removeClass('alert-success alert-warning').addClass('alert-danger').html('Erro na requisição. Tente novamente mais tarde.').fadeIn();
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
