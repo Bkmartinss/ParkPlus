@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $entrada = $_POST['entry-time'];
         $tipo = $_POST['vehicle-type'];
 
-        // Validação da placa (exemplo: formato esperado ABC1D23)
         if (!preg_match("/^[A-Z]{3}[0-9][A-Z][0-9]{2}$/", $placa)) {
             echo "Formato da placa inválido. Utilize o formato ABC1D23.";
             exit;
@@ -33,4 +32,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "<div class='alert alert-danger'>Método de requisição inválido.</div>";
 }
-?>

@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Placa ou hora de saída não fornecida.");
     }
 
-    // Atualiza a tabela de veículos com a hora de saída
     try {
         // Consulta para buscar a hora de entrada e o tipo do veículo
         $sql = "SELECT ENTRADA, VEI_TIPO FROM VEICULOS WHERE PLACA = :placa";
